@@ -15,11 +15,15 @@ object SlickTests extends App with DbSetup {
 
   import jdbcProfile.api._
 
+  // -- 1.
+
   implicit lazy val cityIdColumnType = MappedColumnType.base[CityId, Int](_.id, CityId)
   implicit lazy val metroSystemIdColumnType = MappedColumnType.base[MetroSystemId, Int](_.id, MetroSystemId)
   implicit lazy val metroLineIdColumnType = MappedColumnType.base[MetroLineId, Int](_.id, MetroLineId)
   implicit lazy val trackTypeColumnType = MappedColumnType.base[TrackType, Int](_.id, TrackType.byIdOrThrow)
 
+  // -- 2.
+  
   class Cities(tag: Tag) extends Table[City](tag, "city") {
     def id = column[CityId]("id", O.PrimaryKey, O.AutoInc)
     def name = column[String]("name")
@@ -49,7 +53,7 @@ object SlickTests extends App with DbSetup {
   }
   lazy val metroLines = TableQuery[MetroLines]
 
-  //--
+  // -- 3.
 
   val selectNamesOfBig: DBIO[Seq[(String, Int)]] = {
     cities.filter(_.population > 4000000).map(c => (c.name, c.population)).result
@@ -57,7 +61,7 @@ object SlickTests extends App with DbSetup {
 
   case class MetroSystemWithLineCount(metroSystemName: String, cityName: String, lineCount: Int)
 
-  //--
+  // -- 4.
 
   val selectMetroSystemsWithMostLines: DBIO[Seq[MetroSystemWithLineCount]] = {
     /*
@@ -79,7 +83,7 @@ object SlickTests extends App with DbSetup {
       .map(_.map(MetroSystemWithLineCount.tupled))
   }
 
-  //--
+  // -- 5.
 
   val transactions: DBIO[Int] = {
     val combined = for {
@@ -90,7 +94,7 @@ object SlickTests extends App with DbSetup {
     combined.transactionally
   }
 
-  //--
+  // -- 6.
 
   val future = db.run(selectMetroSystemsWithMostLines).map { r =>
     r.foreach(println)

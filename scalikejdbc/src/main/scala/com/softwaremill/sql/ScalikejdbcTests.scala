@@ -11,7 +11,7 @@ object ScalikejdbcTests extends App with DbSetup {
   ConnectionPool.add('tests, "jdbc:postgresql:sql_compare", "postgres", "")
   def db: NamedDB = NamedDB('tests)
 
-  //--
+  // -- 1.
 
   implicit val cityIdTypeBinder: TypeBinder[CityId] = new TypeBinder[CityId] {
     def apply(rs: ResultSet, label: String): CityId = CityId(rs.getInt(label))
@@ -33,7 +33,7 @@ object ScalikejdbcTests extends App with DbSetup {
     def apply(rs: ResultSet, index: Int): TrackType = TrackType.byIdOrThrow(rs.getInt(index))
   }
 
-  //--
+  // -- 2.
 
   class CitySQL(db: NamedDB) extends SQLSyntaxSupport[City] {
     override def connectionPoolName: Any = db.name
@@ -60,7 +60,7 @@ object ScalikejdbcTests extends App with DbSetup {
   val metroSystemSQL = new MetroSystemSQL(db)
   val metroLineSQL = new MetroLineSQL(db)
 
-  //--
+  // -- 3.
 
   val selectNamesOfBig: SQLToList[City, HasExtractor] = {
     val bigLimit = 4000000
@@ -71,7 +71,7 @@ object ScalikejdbcTests extends App with DbSetup {
     }.map(citySQL.apply(_, c.resultName)).list()
   }
 
-  //--
+  // -- 4.
 
   case class MetroSystemWithLineCount(metroSystemName: String, cityName: String, lineCount: Int)
 
@@ -90,7 +90,7 @@ object ScalikejdbcTests extends App with DbSetup {
       .list()
   }
 
-  //--
+  // -- 5.
 
   def transactions(): Int = {
     db.localTx { implicit session =>
@@ -100,7 +100,7 @@ object ScalikejdbcTests extends App with DbSetup {
     }
   }
 
-  //--
+  // -- 6.
 
   db.readOnly { implicit session =>
     selectNamesOfBig.apply().foreach(println)

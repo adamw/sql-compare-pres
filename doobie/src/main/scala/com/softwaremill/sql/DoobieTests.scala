@@ -11,10 +11,12 @@ object DoobieTests extends App with DbSetup {
   dbSetup()
   val xa = DriverManagerTransactor[IOLite]("org.postgresql.Driver", "jdbc:postgresql:sql_compare", null, null)
 
+  // -- 1.
+
   implicit val trackTypeMeta: Meta[TrackType] =
     Meta[Int].xmap(TrackType.byIdOrThrow, _.id)
 
-  //--
+  // -- 2.
 
   val selectNamesOfBig: ConnectionIO[List[City]] = {
     val bigLimit = 4000000
@@ -24,7 +26,7 @@ object DoobieTests extends App with DbSetup {
       .list
   }
 
-  //--
+  // -- 3.
 
   case class MetroSystemWithLineCount(metroSystemName: String, cityName: String, lineCount: Int)
 
@@ -39,7 +41,7 @@ object DoobieTests extends App with DbSetup {
       """.query[MetroSystemWithLineCount].list
   }
 
-  //--
+  // -- 4.
 
   def transactions: ConnectionIO[Int] = {
     for {
@@ -48,14 +50,14 @@ object DoobieTests extends App with DbSetup {
     } yield l1.length + l2.length
   }
 
-  //--
+  // -- 5.
 
   def checkQuery(): Unit = {
     import xa.yolo._
     sql"select name from city".query[String].check.unsafePerformIO
   }
 
-  //--
+  // -- 6.
 
   selectNamesOfBig.transact(xa).unsafePerformIO.foreach(println)
 }

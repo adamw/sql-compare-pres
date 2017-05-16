@@ -13,10 +13,12 @@ object QuillTests extends App with DbSetup {
   lazy val ctx = new PostgresAsyncContext[SnakeCase]("ctx")
   import ctx._
 
+  // -- 1.
+
   implicit val encodeTrackType = MappedEncoding[TrackType, Int](_.id)
   implicit val decodeTrackType = MappedEncoding[Int, TrackType](TrackType.byIdOrThrow)
 
-  //--
+  // -- 2.
 
   def selectNamesOfBig(): Future[Unit] = {
     val bigLimit = 4000000
@@ -28,7 +30,7 @@ object QuillTests extends App with DbSetup {
     ctx.run(q).map(_.foreach(println))
   }
 
-  //--
+  // -- 3.
 
   def selectMetroLinesSortedByStations(): Future[Unit] = {
     case class MetroLineWithSystemCityNames(
@@ -48,7 +50,7 @@ object QuillTests extends App with DbSetup {
       .map(_.foreach(println))
   }
 
-  //--
+  // -- 4.
 
   def transactions(): Future[Int] = {
     def select1(implicit ec: ExecutionContext): Future[Seq[String]] = ctx.run {
@@ -67,7 +69,7 @@ object QuillTests extends App with DbSetup {
     }
   }
 
-  //--
+  // -- 5.
 
   try Await.result(selectNamesOfBig(), 1.minute)
   finally ctx.close()
