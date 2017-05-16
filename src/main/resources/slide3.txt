@@ -1,0 +1,7 @@
+What we'll be looking at:
+
+* defining the meta-model
+* running a simple query
+* running a query with JOIN and GROUP BY
+* transaction support
+* async & reactive support

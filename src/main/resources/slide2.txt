@@ -1,0 +1,7 @@
+Relational databases - how to access from Scala?
+
+These libraries have an answer:
+* Slick
+* Doobie
+* Quill
+* ScalikeJDBC
