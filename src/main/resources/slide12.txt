@@ -1,0 +1,11 @@
+Asynchronous:
+* Slick:       async layer on top of blocking drivers
+* Doobie:      no
+* Quill:       no OR fully async, depending on driver
+* ScalikeJDBC: no
+
+Reactive:
+* Slick:       reactive-streams
+* Doobie:      scalaz-stream OR fs2
+* Quill:       no
+* ScalikeJDBC: no

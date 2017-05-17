@@ -1,0 +1,11 @@
+Model representation:
+* Slick:       case classes, tuples, hand-mapped types
+* Doobie:      case classes, primitives, tuples, hlists, shapeless records
+* Quill:       case classes
+* ScalikeJDBC: none OR case classes w/ macros add-on
+
+Meta-model:
+* Slick:       lifted
+* Doobie:      none
+* Quill:       by convention
+* ScalikeJDBC: none OR by convention w/ macros add-on

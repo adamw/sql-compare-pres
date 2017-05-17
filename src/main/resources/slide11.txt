@@ -1,0 +1,11 @@
+Query language:
+* Slick:       Embedded DSL
+* Doobie:      SQL
+* Quill:       Quoted DSL
+* ScalikeJDBC: SQL / embedded DSL
+
+Type-safe queries:
+* Slick:       yes
+* Doobie:      no
+* Quill:       yes
+* ScalikeJDBC: partial

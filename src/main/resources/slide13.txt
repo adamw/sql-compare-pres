@@ -1,0 +1,11 @@
+Transactions:
+* Slick:       compose queries
+* Doobie:      compose queries
+* Quill:       implicit ExecutionContext
+* ScalikeJDBC: implicit Session
+
+Result wrapping:
+* Slick:       Future
+* Doobie:      IOLite OR Task OR custom
+* Quill:       none OR Future
+* ScalikeJDBC: none
