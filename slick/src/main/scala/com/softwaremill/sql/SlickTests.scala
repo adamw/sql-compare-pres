@@ -59,9 +59,9 @@ object SlickTests extends App with DbSetup {
     cities.filter(_.population > 4000000).map(c => (c.name, c.population)).result
   }
 
-  case class MetroSystemWithLineCount(metroSystemName: String, cityName: String, lineCount: Int)
-
   // -- 4.
+
+  case class MetroSystemWithLineCount(metroSystemName: String, cityName: String, lineCount: Int)
 
   val selectMetroSystemsWithMostLines: DBIO[Seq[MetroSystemWithLineCount]] = {
     /*
