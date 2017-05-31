@@ -3,4 +3,4 @@ These are *NOT* ORMs:
 * no navigating of relations
 * no inheritance
 * no pretending tables maps to objects
-* table row map to row representations, e.g. case classes
+* table rows map to row representations, e.g. case classes
